@@ -1,0 +1,29 @@
+---
+import Title from '../atoms/Title.astro';
+import { evidenceData } from '../data/evidenceData.js';
+import EvidenceCard from './evidence-card/EvidenceCard.astro';
+import './evidences.css';
+---
+
+<section
+	id="evidences"
+	class="flex flex-col w-full justify-center items-center h-auto min-h-[100dvh]"
+>
+	<div class="evidences__container">
+		<Title contenido="Evidences" />
+
+		{evidenceData.map((category) => (
+			<div class="evidence__category">
+				<h2 class="category__title">
+					{category.category}
+				</h2>
+
+				<div class="category__grid">
+					{category.files.map((file) => (
+						<EvidenceCard {...file} />
+					))}
+				</div>
+			</div>
+		))}
+	</div>
+</section>

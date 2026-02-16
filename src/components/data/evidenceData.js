@@ -1,50 +1,62 @@
+/**
+ * @typedef EvidenceFile
+ * @property {string} name
+ * @property {string} file
+ * @property {string} type
+ */
+
+/**
+ * @typedef EvidenceCategory
+ * @property {string} category
+ * @property {EvidenceFile[]} files
+ */
+
+/**
+ * @type {EvidenceCategory[]}
+ */
 export const evidenceData = [
 	{
 		category: "Modeling",
-		folder: "modeling",
 		files: [
 			{
-				name: "Entity-Relationship Diagram",
-				description: "ER diagram for the academic management system.",
-				file: "er-diagram.pdf"
+				name: "ER Diagram",
+				file: "/evidence/modeling/er-diagram.pdf",
+				type: "PDF"
 			},
 			{
 				name: "Logical Model",
-				description: "Relational model derived from ER diagram.",
-				file: "logical-model.pdf"
+				file: "/evidence/modeling/logical-model.pdf",
+				type: "PDF"
 			}
 		]
 	},
 	{
 		category: "Normalization",
-		folder: "normalization",
 		files: [
 			{
-				name: "Normalization 1NF-3NF",
-				description: "Application of First, Second and Third Normal Form.",
-				file: "normalization.pdf"
+				name: "Normalization Process",
+				file: "/evidence/normalization/normalization.pdf",
+				type: "PDF"
 			}
 		]
 	},
 	{
 		category: "SQL",
-		folder: "sql",
 		files: [
 			{
 				name: "Basic Queries",
-				description: "SELECT, WHERE, JOIN and GROUP BY examples.",
-				file: "basic-queries.sql"
+				file: "/evidence/sql/basic-queries.sql",
+				type: "SQL"
 			}
 		]
 	},
 	{
 		category: "Project",
-		folder: "project",
 		files: [
 			{
-				name: "Final Database Project",
-				description: "Complete database design and implementation.",
-				file: "final-project.zip"
+				name: "Final Project",
+				file: "/evidence/project/final-project.zip",
+				type: "ZIP"
 			}
 		]
 	}

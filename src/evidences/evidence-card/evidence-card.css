@@ -1,0 +1,35 @@
+.evidence__card {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 260px;
+	height: 130px;
+	border-radius: 20px;
+	background: #1a1a1a;
+	border: 1px solid #2a2a2a;
+	text-decoration: none;
+	color: white;
+	transition: all 0.3s ease;
+}
+
+.evidence__card:hover {
+	transform: translateY(-6px);
+	border-color: var(--primary);
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.evidence__content {
+	text-align: center;
+	padding: 1rem;
+}
+
+.evidence__title {
+	font-size: 1.4rem;
+	margin-bottom: 0.6rem;
+}
+
+.evidence__type {
+	font-size: 1.1rem;
+	opacity: 0.6;
+	letter-spacing: 1px;
+}

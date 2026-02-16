@@ -1,0 +1,30 @@
+.evidences__container {
+	max-width: var(--max-width);
+	width: 100%;
+	padding: 4rem 2rem;
+}
+
+.evidence__category {
+	margin-top: 5rem;
+}
+
+.category__title {
+	font-size: 2.2rem;
+	margin-bottom: 2.5rem;
+	border-left: 4px solid var(--primary);
+	padding-left: 1rem;
+}
+
+.category__grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 2rem;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+	.category__grid {
+		justify-content: center;
+	}
+}
