@@ -15,12 +15,13 @@
 }
 
 .about__img {
-	border-radius: 50%;
-	object-fit: cover;
-	width: 100%;
-	max-width: 350px;
-	height: auto;
+  border-radius: 15px; 
+  object-fit: cover;
+  width: 100%;
+  max-width: 350px;
+  height: auto; 
 }
+
 
 .about__content {
 	display: flex;
