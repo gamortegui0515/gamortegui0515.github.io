@@ -1,0 +1,93 @@
+---
+import { evidenceData } from "../data/evidenceData.js";
+---
+
+<section id="evidences" class="evidences">
+	<div class="container">
+		<h2>Evidences</h2>
+
+		{evidenceData.map((category) => (
+			<div class="category">
+				<h3>{category.category}</h3>
+
+				<ul>
+					{category.files.map((file) => (
+						<li>
+							<div class="file-info">
+								<strong>{file.name}</strong>
+								<p>{file.description}</p>
+							</div>
+
+							<a
+								href={`/evidence/${category.folder}/${file.file}`}
+								target="_blank"
+							>
+								Open
+							</a>
+						</li>
+					))}
+				</ul>
+			</div>
+		))}
+	</div>
+</section>
+
+<style>
+.evidences {
+	padding: 6rem 2rem;
+}
+
+.container {
+	max-width: 1000px;
+	margin: 0 auto;
+}
+
+.category {
+	margin-bottom: 4rem;
+}
+
+.category h3 {
+	font-size: 2.2rem;
+	margin-bottom: 1.5rem;
+}
+
+ul {
+	list-style: none;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+li {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1.5rem;
+	border-radius: 12px;
+	background: #1f1f1f;
+}
+
+.file-info p {
+	margin: 0;
+	font-size: 1.4rem;
+	opacity: 0.8;
+}
+
+a {
+	text-decoration: none;
+	padding: 0.6rem 1.2rem;
+	border-radius: 8px;
+	background: #6c63ff;
+	color: white;
+	font-size: 1.4rem;
+}
+
+@media (max-width: 768px) {
+	li {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 1rem;
+	}
+}
+</style>
