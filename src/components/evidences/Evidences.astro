@@ -13,17 +13,20 @@ import './evidences.css';
 		<Title contenido="Evidences" />
 
 		{evidenceData.map((category) => (
-			<div class="evidence__category">
-				<h2 class="category__title">
+			<details class="evidence__category">
+				<summary class="category__title">
 					{category.category}
-				</h2>
+					<span class="category__count">
+						({category.files.length})
+					</span>
+				</summary>
 
 				<div class="category__grid">
 					{category.files.map((file) => (
 						<EvidenceCard {...file} />
 					))}
 				</div>
-			</div>
+			</details>
 		))}
 	</div>
 </section>
