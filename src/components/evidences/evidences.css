@@ -23,22 +23,30 @@
 
 .category__title {
 	font-size: 1.8rem;
-	font-weight: 500;
+	font-weight: 600;
 	cursor: pointer;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	list-style: none;
+	color: var(--primary);
+	transition: color 0.3s ease;
 }
+
 
 .category__title::-webkit-details-marker {
 	display: none;
 }
 
 .category__count {
-	opacity: 0.6;
-	font-size: 1.3rem;
+	font-size: 1.2rem;
+	background: var(--primary);
+	color: black;
+	padding: 4px 10px;
+	border-radius: 999px;
+	font-weight: 600;
 }
+
 
 /* GRID */
 
@@ -55,4 +63,13 @@
 	.category__grid {
 		justify-content: center;
 	}
+}
+
+.evidence__category[open] .category__title {
+	color: white;
+}
+
+.evidence__category[open] .category__count {
+	background: white;
+	color: var(--primary);
 }
