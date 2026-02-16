@@ -55,6 +55,10 @@
 	display: flex;
 	flex-wrap: wrap;
 	gap: 2rem;
+		
+	max-height: 420px;  
+	overflow-y: auto;    
+	padding-right: 8px;
 }
 
 /* RESPONSIVE */

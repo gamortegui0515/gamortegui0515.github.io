@@ -21,12 +21,14 @@ export const evidenceData = [
 			{
 				name: "ER Diagram",
 				file: "/evidence/modeling/er-diagram.pdf",
-				type: "PDF"
+				type: "PDF",
+                date: "2026-02-12"
 			},
 			{
 				name: "Logical Model",
 				file: "/evidence/modeling/logical-model.pdf",
-				type: "PDF"
+				type: "PDF",
+                date: "2026-02-12"
 			}
 		]
 	},
@@ -36,7 +38,8 @@ export const evidenceData = [
 			{
 				name: "Normalization Process",
 				file: "/evidence/normalization/normalization.pdf",
-				type: "PDF"
+				type: "PDF",
+                date: "2026-02-12"
 			}
 		]
 	},
@@ -46,7 +49,8 @@ export const evidenceData = [
 			{
 				name: "Basic Queries",
 				file: "/evidence/sql/basic-queries.sql",
-				type: "SQL"
+				type: "SQL",
+                date: "2026-02-12"
 			}
 		]
 	},
@@ -56,7 +60,8 @@ export const evidenceData = [
 			{
 				name: "Final Project",
 				file: "/evidence/project/final-project.zip",
-				type: "ZIP"
+				type: "ZIP",
+                date: "2026-02-12"
 			}
 		]
 	}

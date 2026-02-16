@@ -1,12 +1,13 @@
 ---
 import './evidence-card.css';
 
-const { name, file, type } = Astro.props;
----
+const { name, file, type, date } = Astro.props;
 
+---
 <a href={file} target="_blank" class="evidence__card">
 	<div class="evidence__content">
 		<h3 class="evidence__title">{name}</h3>
 		<span class="evidence__type">{type}</span>
+		<span class="evidence__date">{date}</span>
 	</div>
 </a>
