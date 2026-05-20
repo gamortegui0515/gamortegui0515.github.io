@@ -1,0 +1,38 @@
+---
+import SocialIcons from '../SocialIcons.astro';
+import Title from '../atoms/Title.astro';
+import "./about.css"
+
+
+---
+
+<section id="presentacion" class="about">
+	<div class="about__container">
+		<img
+			class="about__img"
+			src="/img/logo ueb.png"
+			alt="Logo_UEB_img"
+		/>
+
+		<div class="about__content">
+			<Title margin="1rem" contenido="Presentación" />
+			<p class="about__text">
+				Este es mi portafolio de la asignatura 
+				Bases de Datos 1, donde compartiré mis evidencias, proyectos y avances 
+				durante el semestre.
+			</p>
+			
+			<div class="video__container">
+				<iframe 
+					src="https://www.youtube.com/embed/wtU9P4M3qw8"
+					title="Video de presentación"
+					frameborder="0"
+					allowfullscreen>
+				</iframe>
+			</div>
+			
+			<SocialIcons width="25" height="25"/>
+		</div>
+	</div>
+
+</section>

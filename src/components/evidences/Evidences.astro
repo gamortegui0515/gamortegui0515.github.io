@@ -1,0 +1,60 @@
+---
+import Title from '../atoms/Title.astro';
+import { evidenceData } from '../data/evidenceData.js';
+import EvidenceCard from './evidence-card/EvidenceCard.astro';
+import './evidences.css';
+---
+
+<section
+	id="evidences"
+	class="flex flex-col w-full justify-center items-center h-auto min-h-[100dvh]"
+>
+	<div class="evidences__container">
+		<Title contenido="Evidencias" />
+		<p class="evidences__subtitle">
+			Trabajos, talleres y proyectos desarrollados durante Bases de Datos 1 — organizados por tema.
+		</p>
+
+		{evidenceData.map((category) => (
+			<details class="evidence__category" style={`--cat-color: ${category.color}`}>
+				<summary class="category__title">
+					<span class="category__title-left">
+						<iconify-icon
+							class="category__icon"
+							icon={category.icon}
+							width="22"
+							height="22"
+						></iconify-icon>
+						<span class="category__name">{category.category}</span>
+					</span>
+					<span class="category__right">
+						<span class="category__count">{category.files.length}</span>
+						<iconify-icon
+							class="category__arrow"
+							icon="mdi:chevron-down"
+							width="20"
+							height="20"
+						></iconify-icon>
+					</span>
+				</summary>
+
+				<p class="category__desc">{category.description}</p>
+
+				<div class="category__grid">
+					{category.files.map((file) => (
+						<EvidenceCard {...file} color={category.color} />
+					))}
+				</div>
+			</details>
+		))}
+	</div>
+</section>
+
+<style>
+	.evidences__subtitle {
+		font-size: 1.7rem;
+		color: var(--primary-70);
+		margin-bottom: 2rem;
+		margin-top: -0.5rem;
+	}
+</style>
