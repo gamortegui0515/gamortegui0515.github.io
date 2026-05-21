@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿---
 import './evidence-card.css';
 
@@ -10,11 +11,26 @@ export interface Props {
   details: string;
   tags?: string[];
   color?: string;
+=======
+---
+import './evidence-card.css';
+
+export interface Props {
+	name: string;
+	file: string;
+	type: string;
+	date: string;
+	description: string;
+	details: string;
+	tags?: string[];
+	color?: string;
+>>>>>>> 3a6a620ebd77103a16b46e7cf685d7adb5efba43
 }
 
 const { name, file, type, date, description, details, tags = [], color = '#8664ee' } = Astro.props;
 
 const typeIcons: Record<string, string> = {
+<<<<<<< HEAD
   PDF: 'mdi:file-pdf-box',
   SQL: 'mdi:database-outline',
   ZIP: 'mdi:zip-box-outline',
@@ -22,10 +38,17 @@ const typeIcons: Record<string, string> = {
   XLSX: 'mdi:file-excel-outline',
   DOCX: 'mdi:file-word-outline',
   LINK: 'mdi:link-variant',
+=======
+	PDF: 'mdi:file-pdf-box',
+	SQL: 'mdi:database-outline',
+	ZIP: 'mdi:zip-box-outline',
+	IMG: 'mdi:image-outline',
+>>>>>>> 3a6a620ebd77103a16b46e7cf685d7adb5efba43
 };
 const previewIcon = typeIcons[type] ?? 'mdi:file-document-outline';
 
 const formattedDate = date
+<<<<<<< HEAD
   ? new Date(date + 'T12:00:00').toLocaleDateString('es-CO', {
       year: 'numeric', month: 'short', day: 'numeric'
     })
@@ -76,3 +99,119 @@ const isLink = type === 'LINK';
     </a>
   </div>
 </div>
+=======
+	? new Date(date + 'T12:00:00').toLocaleDateString('es-CO', {
+			year: 'numeric', month: 'short', day: 'numeric'
+	  })
+	: '';
+
+const modalId = `modal-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<!-- CARD -->
+<div class="ev-card" style={`--ev-color: ${color}`}>
+
+	<!-- preview strip -->
+	<div class="ev-card__preview">
+		<iconify-icon class="ev-card__preview-icon" icon={previewIcon} width="42" height="42"></iconify-icon>
+		<span class="ev-card__badge">{type}</span>
+	</div>
+
+	<!-- body -->
+	<div class="ev-card__body">
+		<h3 class="ev-card__name">{name}</h3>
+		<p class="ev-card__desc">{description}</p>
+		{tags.length > 0 && (
+			<div class="ev-card__tags">
+				{tags.map(t => <span class="ev-card__tag">{t}</span>)}
+			</div>
+		)}
+		{formattedDate && <span class="ev-card__date">{formattedDate}</span>}
+	</div>
+
+	<!-- actions -->
+	<div class="ev-card__actions">
+		<a class="ev-card__btn ev-card__btn--download" href={file} download target="_blank" title="Descargar">
+			<iconify-icon icon="mdi:download-outline" width="17" height="17"></iconify-icon>
+			Descargar
+		</a>
+		<a class="ev-card__btn ev-card__btn--details" href={`/evidence/${name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}>
+			<iconify-icon icon="mdi:open-in-new" width="17" height="17"></iconify-icon>
+			Ver detalle
+		</a>
+	</div>
+</div>
+
+<!-- MODAL -->
+<div class="ev-modal-backdrop" id={modalId} role="dialog" aria-modal="true" aria-label={name}>
+	<div class="ev-modal">
+		<div class="ev-modal__header">
+			<h2 class="ev-modal__title">{name}</h2>
+			<button class="ev-modal__close" data-close={modalId} aria-label="Cerrar">✕</button>
+		</div>
+		<div class="ev-modal__body">
+			<p class="ev-modal__detail-text">{details}</p>
+			<div class="ev-modal__meta">
+				<span class="ev-modal__meta-item">
+					<iconify-icon icon="mdi:file-outline" width="15"></iconify-icon>
+					{type}
+				</span>
+				{formattedDate && (
+					<span class="ev-modal__meta-item">
+						<iconify-icon icon="mdi:calendar-outline" width="15"></iconify-icon>
+						{formattedDate}
+					</span>
+				)}
+			</div>
+			{tags.length > 0 && (
+				<div class="ev-modal__tags">
+					{tags.map(t => <span class="ev-modal__tag">{t}</span>)}
+				</div>
+			)}
+		</div>
+		<div class="ev-modal__footer">
+			<a class="ev-modal__download" style={`--ev-modal-color: ${color}`} href={file} download target="_blank">
+				<iconify-icon icon="mdi:download-outline" width="20"></iconify-icon>
+				Descargar archivo
+			</a>
+		</div>
+	</div>
+</div>
+
+<script>
+	// Open
+	document.querySelectorAll('[data-modal]').forEach(btn => {
+		btn.addEventListener('click', () => {
+			const id = (btn as HTMLElement).dataset.modal!;
+			document.getElementById(id)?.classList.add('open');
+			document.body.style.overflow = 'hidden';
+		});
+	});
+	// Close via button
+	document.querySelectorAll('[data-close]').forEach(btn => {
+		btn.addEventListener('click', () => {
+			const id = (btn as HTMLElement).dataset.close!;
+			document.getElementById(id)?.classList.remove('open');
+			document.body.style.overflow = '';
+		});
+	});
+	// Close clicking backdrop
+	document.querySelectorAll('.ev-modal-backdrop').forEach(backdrop => {
+		backdrop.addEventListener('click', e => {
+			if (e.target === backdrop) {
+				backdrop.classList.remove('open');
+				document.body.style.overflow = '';
+			}
+		});
+	});
+	// Close with Escape
+	document.addEventListener('keydown', e => {
+		if (e.key === 'Escape') {
+			document.querySelectorAll('.ev-modal-backdrop.open').forEach(m => {
+				m.classList.remove('open');
+				document.body.style.overflow = '';
+			});
+		}
+	});
+</script>
+>>>>>>> 3a6a620ebd77103a16b46e7cf685d7adb5efba43

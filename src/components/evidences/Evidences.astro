@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 ﻿---
+=======
+---
+>>>>>>> 3a6a620ebd77103a16b46e7cf685d7adb5efba43
 import Title from '../atoms/Title.astro';
 import { evidenceData } from '../data/evidenceData.js';
 import EvidenceCard from './evidence-card/EvidenceCard.astro';
 import './evidences.css';
+<<<<<<< HEAD
 
 const groupFiles = (files) => {
 	const groups = new Map();
@@ -13,6 +18,8 @@ const groupFiles = (files) => {
 	});
 	return Array.from(groups, ([name, items]) => ({ name, items }));
 };
+=======
+>>>>>>> 3a6a620ebd77103a16b46e7cf685d7adb5efba43
 ---
 
 <section
@@ -22,7 +29,11 @@ const groupFiles = (files) => {
 	<div class="evidences__container">
 		<Title contenido="Evidencias" />
 		<p class="evidences__subtitle">
+<<<<<<< HEAD
 			Trabajos, talleres y proyectos desarrollados durante Bases de Datos 1 - organizados por tema.
+=======
+			Trabajos, talleres y proyectos desarrollados durante Bases de Datos 1 — organizados por tema.
+>>>>>>> 3a6a620ebd77103a16b46e7cf685d7adb5efba43
 		</p>
 
 		{evidenceData.map((category) => (
@@ -50,6 +61,7 @@ const groupFiles = (files) => {
 
 				<p class="category__desc">{category.description}</p>
 
+<<<<<<< HEAD
 				<div class="category__groups">
 					{category.links?.length > 0 && (
 						<section class="category__resources">
@@ -81,6 +93,11 @@ const groupFiles = (files) => {
 								))}
 							</div>
 						</section>
+=======
+				<div class="category__grid">
+					{category.files.map((file) => (
+						<EvidenceCard {...file} color={category.color} />
+>>>>>>> 3a6a620ebd77103a16b46e7cf685d7adb5efba43
 					))}
 				</div>
 			</details>
@@ -96,4 +113,7 @@ const groupFiles = (files) => {
 		margin-top: -0.5rem;
 	}
 </style>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3a6a620ebd77103a16b46e7cf685d7adb5efba43

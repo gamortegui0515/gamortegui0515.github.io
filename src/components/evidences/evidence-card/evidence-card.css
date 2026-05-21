@@ -129,6 +129,7 @@
 .ev-card__btn--details:hover {
 	color: #ddd;
 }
+<<<<<<< HEAD
 .ev-card__btn--disabled {
 	cursor: not-allowed;
 	opacity: 0.65;
@@ -136,6 +137,8 @@
 .ev-card__btn--disabled:hover {
 	background: transparent;
 }
+=======
+>>>>>>> 3a6a620ebd77103a16b46e7cf685d7adb5efba43
 
 /* ── MODAL ── */
 .ev-modal-backdrop {
