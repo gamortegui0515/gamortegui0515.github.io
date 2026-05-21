@@ -1,0 +1,379 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { evidenceData } from '../../components/data/evidenceData';
+
+export async function getStaticPaths() {
+  const toSlug = (value) =>
+    value
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '');
+
+  return evidenceData.flatMap(category =>
+    category.files.map(file => ({
+      params: { slug: toSlug(file.name) },
+      props: { file, category }
+    }))
+  );
+}
+
+const { file, category } = Astro.props;
+const hasFile = Boolean(file.file);
+const canEmbed = hasFile && file.type === 'PDF';
+const canPreviewCode = hasFile && file.type === 'SQL';
+const isOfficeFile = ['DOCX', 'XLSX'].includes(file.type);
+const isZip = file.type === 'ZIP';
+const isLink = file.type === 'LINK';
+---
+
+<Layout title={`${file.name} | Evidencia`}>
+  <main class="detail-page">
+    <article class="detail-card">
+      <a href="/#evidences" class="back-btn">
+        <iconify-icon icon="mdi:arrow-left" width="18" height="18"></iconify-icon>
+        Volver al portafolio
+      </a>
+
+      <header class="detail-header">
+        <span class="detail-category" style={`--accent:${category.color}`}>
+          {category.category}
+        </span>
+        {file.group && <span class="detail-group">{file.group}</span>}
+        <h1>{file.name}</h1>
+        <p>{file.description}</p>
+      </header>
+
+      <section class="preview-section">
+        <div class="section-title">
+          <h2>Vista previa</h2>
+          {hasFile && <a href={file.file} target="_blank" rel="noreferrer">{isLink ? 'Abrir enlace' : 'Abrir archivo'}</a>}
+        </div>
+
+        {canEmbed && (
+          <object class="file-preview file-preview--pdf" data={file.file} type="application/pdf">
+            <div class="preview-fallback">
+              <iconify-icon icon="mdi:file-pdf-box" width="44" height="44"></iconify-icon>
+              <p>El navegador no pudo cargar la vista previa del PDF.</p>
+              <a href={file.file} target="_blank">Abrir PDF</a>
+            </div>
+          </object>
+        )}
+
+        {canPreviewCode && (
+          <pre class="file-preview file-preview--code" data-code-src={file.file}>Cargando script SQL...</pre>
+        )}
+
+        {isOfficeFile && (
+          <div class="preview-fallback">
+            <iconify-icon icon={file.type === 'DOCX' ? 'mdi:file-word-outline' : 'mdi:file-excel-outline'} width="44" height="44"></iconify-icon>
+            <p>Este archivo se puede abrir o descargar. La vista previa local de documentos Office depende del navegador y normalmente requiere abrir el archivo.</p>
+            <a href={file.file} target="_blank">Abrir archivo</a>
+          </div>
+        )}
+
+        {isLink && (
+          <div class="preview-fallback">
+            <iconify-icon icon="mdi:link-variant" width="44" height="44"></iconify-icon>
+            <p>Este recurso abre una pagina externa marcada como {file.linkKind || 'enlace'}.</p>
+            <a href={file.file} target="_blank" rel="noreferrer">Abrir enlace</a>
+          </div>
+        )}
+
+        {isZip && (
+          <div class="preview-fallback">
+            <iconify-icon icon="mdi:zip-box-outline" width="44" height="44"></iconify-icon>
+            <p>Este entregable es un paquete comprimido. Abajo se resume que contiene y se mantiene la descarga disponible.</p>
+          </div>
+        )}
+
+        {!hasFile && (
+          <div class="preview-fallback">
+            <iconify-icon icon="mdi:clock-outline" width="44" height="44"></iconify-icon>
+            <p>Esta evidencia queda preparada para agregar despues los enlaces que venian en archivos .txt.</p>
+          </div>
+        )}
+      </section>
+
+      <div class="detail-grid">
+        <section>
+          <h2>Descripcion detallada</h2>
+          <p>{file.details}</p>
+
+          {file.contents?.length > 0 && (
+            <div class="contents-block">
+              <h2>Contenido organizado</h2>
+              <ul>
+                {file.contents.map(item => <li>{item}</li>)}
+              </ul>
+            </div>
+          )}
+        </section>
+
+        <aside>
+          <div class="meta-box">
+            <h3>Informacion</h3>
+            <ul>
+              <li><strong>Tipo:</strong> {file.type}</li>
+              {file.linkKind && <li><strong>Recurso:</strong> {file.linkKind}</li>}
+              <li><strong>Fecha:</strong> {file.date}</li>
+              <li><strong>Categoria:</strong> {category.category}</li>
+              {file.group && <li><strong>Subcarpeta:</strong> {file.group}</li>}
+            </ul>
+          </div>
+
+          <div class="meta-box">
+            <h3>Temas</h3>
+            <div class="tags">
+              {file.tags?.map(tag => <span>{tag}</span>)}
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <div class="detail-actions">
+        {hasFile ? (
+          <>
+            <a href={file.file} target="_blank" rel="noreferrer">
+              <iconify-icon icon="mdi:open-in-new" width="18" height="18"></iconify-icon>
+              {isLink ? 'Abrir enlace' : 'Abrir'}
+            </a>
+            {!isLink && (
+              <a href={file.file} download>
+                <iconify-icon icon="mdi:download-outline" width="18" height="18"></iconify-icon>
+                Descargar evidencia
+              </a>
+            )}
+          </>
+        ) : (
+          <span class="pending-action">Pendiente por agregar enlace</span>
+        )}
+      </div>
+    </article>
+  </main>
+</Layout>
+
+<script>
+  document.querySelectorAll('[data-code-src]').forEach(async (block) => {
+    const target = block as HTMLElement;
+    const src = target.dataset.codeSrc;
+    if (!src) return;
+
+    try {
+      const response = await fetch(src);
+      if (!response.ok) throw new Error('No se pudo cargar el archivo');
+      const text = await response.text();
+      target.textContent = text.slice(0, 20000);
+    } catch {
+      target.textContent = 'No se pudo cargar la vista previa del script SQL.';
+    }
+  });
+</script>
+
+<style>
+.detail-page {
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  display: flex;
+  justify-content: center;
+  background: #09090d;
+}
+.detail-card {
+  max-width: 1180px;
+  width: 100%;
+  background: #111217;
+  border: 1px solid #23232f;
+  border-radius: 24px;
+  padding: 3rem;
+}
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #b7a7ff;
+  text-decoration: none;
+}
+.detail-header {
+  margin-top: 2rem;
+}
+.detail-header h1 {
+  font-size: 4rem;
+  color: white;
+  margin: 1rem 0;
+  line-height: 1.1;
+}
+.detail-header p {
+  font-size: 1.6rem;
+  color: #aaa;
+  line-height: 1.7;
+  max-width: 920px;
+}
+.detail-category,
+.detail-group {
+  display: inline-flex;
+  padding: 0.75rem 1.1rem;
+  border-radius: 999px;
+  margin-right: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+.detail-category {
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  color: var(--accent);
+}
+.detail-group {
+  color: #d8d4e7;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+}
+.preview-section {
+  margin-top: 3rem;
+}
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.section-title h2,
+.detail-grid h2,
+.meta-box h3 {
+  color: white;
+  margin-bottom: 1rem;
+}
+.section-title a {
+  color: #b7a7ff;
+  text-decoration: none;
+  font-size: 1.3rem;
+}
+.file-preview {
+  width: 100%;
+  border: 1px solid #2a2b38;
+  border-radius: 18px;
+  background: #08090e;
+}
+.file-preview--pdf {
+  min-height: 680px;
+}
+.file-preview--code {
+  min-height: 440px;
+  max-height: 680px;
+  overflow: auto;
+  padding: 1.6rem;
+  color: #d7f7df;
+  font-size: 1.25rem;
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+.preview-fallback {
+  min-height: 220px;
+  border: 1px solid #2a2b38;
+  border-radius: 18px;
+  background: #171822;
+  color: #b0b0bc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  text-align: center;
+}
+.preview-fallback iconify-icon {
+  color: #b7a7ff;
+}
+.preview-fallback p {
+  font-size: 1.45rem;
+  line-height: 1.6;
+  max-width: 640px;
+}
+.preview-fallback a {
+  color: #fff;
+  background: #8664ee;
+  padding: 1rem 1.4rem;
+  border-radius: 12px;
+  text-decoration: none;
+}
+.detail-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+.detail-grid p,
+.meta-box li,
+.contents-block li {
+  color: #b0b0bc;
+  font-size: 1.5rem;
+  line-height: 1.8;
+}
+.contents-block {
+  margin-top: 2.4rem;
+}
+.contents-block ul,
+.meta-box ul {
+  padding-left: 1.8rem;
+}
+.meta-box {
+  background: #171822;
+  border: 1px solid #2a2b38;
+  border-radius: 18px;
+  padding: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .8rem;
+}
+.tags span {
+  background: rgba(255,255,255,.05);
+  padding: .6rem 1rem;
+  border-radius: 999px;
+  color: #ddd;
+}
+.detail-actions {
+  margin-top: 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.detail-actions a,
+.pending-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.2rem 1.8rem;
+  border-radius: 14px;
+  background: #8664ee;
+  color: white;
+  text-decoration: none;
+}
+.detail-actions a:first-child {
+  background: transparent;
+  border: 1px solid #8664ee;
+}
+.pending-action {
+  background: #2a2b38;
+  color: #aaa;
+}
+@media (max-width: 768px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+  .detail-header h1 {
+    font-size: 2.8rem;
+  }
+  .detail-card {
+    padding: 2rem;
+  }
+  .file-preview--pdf {
+    min-height: 520px;
+  }
+  .section-title {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+</style>

@@ -1,0 +1,78 @@
+﻿---
+import './evidence-card.css';
+
+export interface Props {
+  name: string;
+  file: string;
+  type: string;
+  date: string;
+  description: string;
+  details: string;
+  tags?: string[];
+  color?: string;
+}
+
+const { name, file, type, date, description, details, tags = [], color = '#8664ee' } = Astro.props;
+
+const typeIcons: Record<string, string> = {
+  PDF: 'mdi:file-pdf-box',
+  SQL: 'mdi:database-outline',
+  ZIP: 'mdi:zip-box-outline',
+  IMG: 'mdi:image-outline',
+  XLSX: 'mdi:file-excel-outline',
+  DOCX: 'mdi:file-word-outline',
+  LINK: 'mdi:link-variant',
+};
+const previewIcon = typeIcons[type] ?? 'mdi:file-document-outline';
+
+const formattedDate = date
+  ? new Date(date + 'T12:00:00').toLocaleDateString('es-CO', {
+      year: 'numeric', month: 'short', day: 'numeric'
+    })
+  : '';
+
+const slug = name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const hasFile = Boolean(file);
+const isLink = type === 'LINK';
+---
+
+<div class="ev-card" style={`--ev-color: ${color}`}>
+  <div class="ev-card__preview">
+    <iconify-icon class="ev-card__preview-icon" icon={previewIcon} width="42" height="42"></iconify-icon>
+    <span class="ev-card__badge">{type}</span>
+  </div>
+
+  <div class="ev-card__body">
+    <h3 class="ev-card__name">{name}</h3>
+    <p class="ev-card__desc">{description}</p>
+    {tags.length > 0 && (
+      <div class="ev-card__tags">
+        {tags.map(t => <span class="ev-card__tag">{t}</span>)}
+      </div>
+    )}
+    {formattedDate && <span class="ev-card__date">{formattedDate}</span>}
+  </div>
+
+  <div class="ev-card__actions">
+    {hasFile && isLink ? (
+      <a class="ev-card__btn ev-card__btn--download" href={file} target="_blank" rel="noreferrer" title="Abrir enlace">
+        <iconify-icon icon="mdi:open-in-new" width="17" height="17"></iconify-icon>
+        Abrir
+      </a>
+    ) : hasFile ? (
+      <a class="ev-card__btn ev-card__btn--download" href={file} download target="_blank" title="Descargar">
+        <iconify-icon icon="mdi:download-outline" width="17" height="17"></iconify-icon>
+        Descargar
+      </a>
+    ) : (
+      <span class="ev-card__btn ev-card__btn--download ev-card__btn--disabled" title="Pendiente">
+        <iconify-icon icon="mdi:clock-outline" width="17" height="17"></iconify-icon>
+        Pendiente
+      </span>
+    )}
+    <a class="ev-card__btn ev-card__btn--details" href={`/evidence/${slug}`} title="Ver detalle">
+      <iconify-icon icon="mdi:open-in-new" width="17" height="17"></iconify-icon>
+      Ver detalle
+    </a>
+  </div>
+</div>
