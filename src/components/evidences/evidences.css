@@ -4,7 +4,7 @@
 	padding: 4rem 2rem 6rem;
 }
 
-/* ── CATEGORY ACCORDION ── */
+/* â”€â”€ CATEGORY ACCORDION â”€â”€ */
 .evidence__category {
 	margin-top: 1.6rem;
 	border: 1px solid #252530;
@@ -18,7 +18,7 @@
 	box-shadow: 0 0 28px rgba(0,0,0,0.4), 0 0 0 1px color-mix(in srgb, var(--cat-color, #8664ee) 30%, transparent);
 }
 
-/* ── SUMMARY ── */
+/* â”€â”€ SUMMARY â”€â”€ */
 .category__title {
 	list-style: none;
 	cursor: pointer;
@@ -72,7 +72,7 @@
 	transform: rotate(180deg);
 }
 
-/* ── CATEGORY DESC ── */
+/* â”€â”€ CATEGORY DESC â”€â”€ */
 .category__desc {
 	font-size: 1.35rem;
 	color: #666;
@@ -81,7 +81,6 @@
 	border-bottom: 1px solid #191920;
 }
 
-<<<<<<< HEAD
 /* Groups */
 .category__groups {
 	padding: 1.6rem 2.2rem 2.2rem;
@@ -174,22 +173,16 @@
 
 /* Grid */
 .category__grid {
-=======
-/* ── GRID ── */
-.category__grid {
-	padding: 2rem 2.2rem 2.2rem;
->>>>>>> 3a6a620ebd77103a16b46e7cf685d7adb5efba43
 	display: flex;
 	flex-wrap: wrap;
 	gap: 1.6rem;
 }
 
-/* ── RESPONSIVE ── */
+/* â”€â”€ RESPONSIVE â”€â”€ */
 @media (max-width: 768px) {
 	.category__grid {
 		justify-content: center;
 	}
-<<<<<<< HEAD
 	.category__groups {
 		padding-inline: 1.4rem;
 	}
@@ -197,8 +190,6 @@
 		align-items: flex-start;
 		flex-direction: column;
 	}
-=======
->>>>>>> 3a6a620ebd77103a16b46e7cf685d7adb5efba43
 	.category__name {
 		font-size: 1.6rem;
 	}

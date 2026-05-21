@@ -1,4 +1,4 @@
-/* ── CARD ── */
+/* â”€â”€ CARD â”€â”€ */
 .ev-card {
 	display: flex;
 	flex-direction: column;
@@ -16,7 +16,7 @@
 	box-shadow: 0 12px 32px rgba(0,0,0,0.45);
 }
 
-/* ── PREVIEW STRIP ── */
+/* â”€â”€ PREVIEW STRIP â”€â”€ */
 .ev-card__preview {
 	height: 90px;
 	background: var(--ev-preview-bg, linear-gradient(135deg, #1a1230, #251845));
@@ -56,7 +56,7 @@
 	z-index: 2;
 }
 
-/* ── BODY ── */
+/* â”€â”€ BODY â”€â”€ */
 .ev-card__body {
 	padding: 1.4rem 1.6rem 1rem;
 	flex: 1;
@@ -96,7 +96,7 @@
 	margin-top: 0.3rem;
 }
 
-/* ── ACTIONS ── */
+/* â”€â”€ ACTIONS â”€â”€ */
 .ev-card__actions {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
@@ -129,7 +129,6 @@
 .ev-card__btn--details:hover {
 	color: #ddd;
 }
-<<<<<<< HEAD
 .ev-card__btn--disabled {
 	cursor: not-allowed;
 	opacity: 0.65;
@@ -137,10 +136,8 @@
 .ev-card__btn--disabled:hover {
 	background: transparent;
 }
-=======
->>>>>>> 3a6a620ebd77103a16b46e7cf685d7adb5efba43
 
-/* ── MODAL ── */
+/* â”€â”€ MODAL â”€â”€ */
 .ev-modal-backdrop {
 	display: none;
 	position: fixed;
